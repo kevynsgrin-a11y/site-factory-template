@@ -1,0 +1,21 @@
+# Site Factory — Cloudflare Pages configuration.
+# The build-backend and frontend-integration agents adjust `pages_build_output_dir`
+# and add bindings (D1/KV/R2) as the site requires.
+
+name = "site-factory-template"
+compatibility_date = "2026-07-16"
+pages_build_output_dir = "dist"
+
+# Example bindings — uncomment / edit as the backend agent specifies:
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "site-factory"
+# database_id = "<set-after: npx wrangler d1 create site-factory>"
+#
+# [[kv_namespaces]]
+# binding = "KV"
+# id = "<set-after: npx wrangler kv namespace create SITE_FACTORY>"
+#
+# [[r2_buckets]]
+# binding = "R2"
+# bucket_name = "site-factory-assets"

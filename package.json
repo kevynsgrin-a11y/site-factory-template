@@ -1,0 +1,13 @@
+{
+  "name": "site-factory-template",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Site Factory master template — a 5-agent Claude Code pipeline for building Cloudflare Pages sites end-to-end.",
+  "scripts": {
+    "preview": "wrangler pages dev",
+    "deploy": "wrangler pages deploy"
+  },
+  "devDependencies": {
+    "wrangler": "latest"
+  }
+}
