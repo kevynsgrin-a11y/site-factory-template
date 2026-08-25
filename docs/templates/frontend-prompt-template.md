@@ -38,7 +38,7 @@ Image style, sources/placeholders, icon set, illustration/photography direction,
 favicon, and social/OG image guidance.
 
 ## 8. Export constraints
-- Output must build to **static assets** deployable on Cloudflare Pages (e.g.
+- Output must build to **static assets** deployable on Cloudflare Pages OR Workers `[assets]` binding (e.g.
   Vite / static export). No server-only Node APIs. Keep dependencies lean
   (paid-token efficiency).
 
@@ -47,4 +47,4 @@ favicon, and social/OG image guidance.
 - [ ] Every button wired to the real endpoint; zero mock data.
 - [ ] Responsive + keyboard-accessible + AA contrast.
 - [ ] Revenue surfaces present with correct IDs.
-- [ ] Builds to static assets for Cloudflare Pages.
+- [ ] Builds to static assets for Cloudflare Pages or Workers.

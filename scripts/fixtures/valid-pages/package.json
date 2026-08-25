@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "preview": "wrangler pages dev",
+    "deploy": "wrangler pages deploy"
+  }
+}

@@ -5,7 +5,9 @@
   "description": "Site Factory master template — a 5-agent Claude Code pipeline for building Cloudflare Pages sites end-to-end.",
   "scripts": {
     "preview": "wrangler pages dev",
-    "deploy": "wrangler pages deploy"
+    "deploy": "wrangler pages deploy",
+    "validate:hosting": "node scripts/validate-hosting.js",
+    "test": "node scripts/validate-hosting.test.js"
   },
   "devDependencies": {
     "wrangler": "latest"

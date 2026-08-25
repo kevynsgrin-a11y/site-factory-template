@@ -101,6 +101,10 @@ ping once a deploy is confirmed live.
 
 ```bash
 npm install
-npm run preview   # wrangler pages dev  (local Pages + Functions)
-npm run deploy    # wrangler pages deploy
+npm run preview   # wrangler pages dev OR wrangler dev
+npm run deploy    # wrangler pages deploy OR wrangler deploy
+
+> **Migration Note:** Existing clones that are purely Cloudflare Pages-based
+> remain fully supported. When starting a new project, an explicit choice between
+> Pages or Worker hosting will be required during the Concept/Backend stages.
 ```
