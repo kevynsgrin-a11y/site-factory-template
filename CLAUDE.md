@@ -2,7 +2,7 @@
 
 This repository is a **Site Factory** pipeline instance: a formalized, 5-agent
 Claude Code system for building websites end-to-end (concept → backend →
-frontend → verified live URL on Cloudflare Pages). Keep this repo as a master
+frontend → verified live URL on Cloudflare). Keep this repo as a master
 template — for each new site, clone it, drop the Agent 1 research report into
 `docs/research/`, and run `/new-site`.
 
@@ -36,8 +36,8 @@ template — for each new site, clone it, drop the Agent 1 research report into
 - **AGENT 5 — VERIFY + DEPLOY** *(subagent `verify-deploy-agent`)*. Scours the
   entire site (backend + integrated frontend), grades it against the
   professional web-development rubric, runs a Self-Check-and-Fix loop until it is
-  indistinguishable from a top-firm build, deploys to Cloudflare Pages, confirms
-  the URL is actually live, and pings via push notification.
+  indistinguishable from a top-firm build, validates hosting settings, deploys to
+  Cloudflare, confirms the URL is actually live, and pings via push notification.
 
 ---
 
@@ -52,9 +52,11 @@ template — for each new site, clone it, drop the Agent 1 research report into
 3. **TOKEN DISCIPLINE.** The frontend prompt targets paid platforms. It must be
    one-shot: zero clarifying questions expected, no backend regeneration, no
    wasted scope.
-4. **CLOUDFLARE-NATIVE.** Target runtime is Cloudflare Pages: static assets +
-   Pages Functions (`functions/` directory) on the Workers runtime. No Node-only
-   APIs in server code. If persistence is needed, prefer D1 (SQL), KV
+4. **CLOUDFLARE-NATIVE.** Target runtime is either Cloudflare Pages (static assets +
+   Pages Functions) or a Cloudflare Worker (Worker entrypoint + static assets
+   binding). An explicit "pages" or "worker" hosting decision MUST be made
+   during the concept/backend stages. Never infer the decision from a project name.
+   No Node-only APIs in server code. If persistence is needed, prefer D1 (SQL), KV
    (key-value), or R2 (files) and say so explicitly in prompts and docs.
 5. **DOCS ALWAYS CURRENT.** Any agent that changes the repo updates `README.md`
    and `PIPELINE.md` before finishing its turn.
@@ -75,7 +77,7 @@ template — for each new site, clone it, drop the Agent 1 research report into
 | 4 | Integration | `frontend-integration-agent` | **Integrated build APPROVED** |
 | 5 | Verify + Deploy | `verify-deploy-agent` | **DONE = live URL confirmed + notification sent** |
 
-DONE is reached only when a live `*.pages.dev` URL is independently confirmed and
+DONE is reached only when a live `*.pages.dev` or `*.workers.dev` URL is independently confirmed and
 the completion notification has been sent.
 
 ---
@@ -89,7 +91,7 @@ the completion notification has been sent.
 | `/build-backend` | Gate-check backend prompt APPROVED, then run `backend-agent` (build + verify + frontend prompt). |
 | `/frontend-handoff [change notes]` | Regenerate/refresh the frontend build prompt via `backend-agent`. |
 | `/integrate-frontend [path-to-exported-code]` | Merge exported UI via `frontend-integration-agent` and wire it to the backend. |
-| `/verify-deploy` | Gate-check integration APPROVED, then run `verify-deploy-agent` (audit → fix → deploy → confirm → notify). |
+| `/verify-deploy` | Gate-check integration APPROVED, then run `verify-deploy-agent` (audit → fix → validate hosting → deploy → confirm → notify). |
 | `/pipeline-status` | Report current stage, blocking gate, and the exact next command. |
 
 ---

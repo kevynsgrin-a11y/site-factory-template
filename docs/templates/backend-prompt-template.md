@@ -4,15 +4,15 @@ EXECUTE THIS SPECIFICATION VERBATIM AND COMPLETELY. Ask nothing; if a conflict i
 > section below — no section may be omitted. The result is saved to
 > `docs/prompts/backend-build-prompt.md` and executed verbatim by `backend-agent`
 > (Agent 3). Target runtime is Cloudflare Pages + Pages Functions on the Workers
-> runtime; no Node-only APIs.
+> runtime OR Cloudflare Workers with static assets binding; no Node-only APIs.
 
 ## 1. Project identity & mission
 One paragraph: site name, one-line mission, target user, and the single outcome
 the backend must make possible.
 
 ## 2. Target runtime constraints
-- Cloudflare Pages + Pages Functions (`functions/`), Workers runtime only.
-- No Node-only APIs (no `fs`, `net`, Node `crypto`/`Buffer` builtins, etc.); use
+- Hosting Decision: Explicitly specify either "pages" (Cloudflare Pages + Pages Functions) or "worker" (Cloudflare Worker with `[assets]` binding).
+- Workers runtime only. No Node-only APIs (no `fs`, `net`, Node `crypto`/`Buffer` builtins, etc.); use
   Web-standard / Workers runtime equivalents.
 - Storage choice **with justification**: D1 (relational SQL), KV (key-value,
   edge-cached), and/or R2 (object/file storage). State which, and why, for each
@@ -41,11 +41,11 @@ examples** to be used as test fixtures.
 
 ## 8. File-by-file build manifest
 Every file to create, with its path and a one-line purpose. Keep the repo
-Cloudflare-Pages-deployable at all times.
+Cloudflare-deployable at all times. Generate the correct `wrangler.toml` structure for the chosen hosting mode.
 
 ## 9. Testing requirements
 - Unit tests for every programmatic function.
-- Endpoint smoke tests (run under `npx wrangler pages dev`).
+- Endpoint smoke tests (run under `npm run preview`).
 - Every equation's test must match the Section 6 hand-computed examples EXACTLY.
 
 ## 10. Documentation requirements

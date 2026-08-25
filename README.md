@@ -28,8 +28,12 @@ git clone <this-repo-url> my-new-site && cd my-new-site
 #    then start Claude Code and run the pipeline:
 #    /new-site  →  APPROVED  →  /concept  →  APPROVED  →  /build-backend  → ...
 
-# Local dev / deploy (Cloudflare Pages)
+# Local dev / deploy (Cloudflare Pages or Workers)
 npm install
-npm run preview   # wrangler pages dev
-npm run deploy    # wrangler pages deploy
+npm run preview   # wrangler pages dev OR wrangler dev
+npm run deploy    # wrangler pages deploy OR wrangler deploy
 ```
+
+> **Migration Note:** Existing clones that are purely Cloudflare Pages-based
+> remain fully supported. When starting a new project, an explicit choice between
+> Pages or Worker hosting will be required during the Concept/Backend stages.

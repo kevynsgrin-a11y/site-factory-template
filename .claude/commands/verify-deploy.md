@@ -1,25 +1,23 @@
 ---
-description: Gate-check integration APPROVED, then run verify-deploy-agent to audit, self-fix, deploy to Cloudflare Pages, confirm live, and notify.
+description: Gate-check the integration APPROVED, then run verify-deploy-agent to audit, fix, validate hosting, deploy, and confirm the live URL.
 ---
 
 **Stage 5 (Verify + Deploy)** of the Site Factory pipeline.
 
-**GATE CHECK:** Confirm the owner has said `APPROVED` on the integrated build
-(Stage 4). If not, refuse and ask for it (GLOBAL LAW 1).
+**GATE CHECK:** Confirm the owner has explicitly said `APPROVED` on the integrated
+build from Stage 4. If approval has not been given in this conversation, refuse
+and ask for it (GLOBAL LAW 1). Do not proceed otherwise.
 
 Then invoke the `verify-deploy-agent` subagent with a self-contained prompt
 (GLOBAL LAW 6) that includes:
 
-- The rubric path `docs/templates/grading-rubric.md` (score every category
-  0–100 with file/line evidence; deploy threshold = weighted total ≥ 90 AND no
-  category < 80; Self-Check-and-Fix loop up to 3 passes).
-- The Cloudflare Pages project name from `wrangler.toml` (`name = ...`) and the
-  build output dir (`pages_build_output_dir`).
-- The notify script path `scripts/notify.sh` for the final `🚀 LIVE` ping.
-- The order of operations: audit → self-fix → `npm run build` (if applicable) →
-  `npx wrangler pages deploy` → independently confirm the live `*.pages.dev` URL
-  (HTTP 200, correct `<title>`, key routes) → notify → update `PIPELINE.md` to
-  DONE. Never notify before the live check passes.
+- The requirement to audit the full site against `docs/templates/grading-rubric.md`
+  and grade every category 0–100.
+- The requirement to run a Self-Check-and-Fix loop up to 3 times if the score
+  falls short.
+- The absolute requirement to run `npm run validate:hosting` before deploy and report any missing credentials or resources as human operator blockers. Do not silently provision or fabricate them. Stop and wait if there is a blocker.
+- The requirement to deploy via `npm run deploy` → independently confirm the live URL via web fetch →
+  send the completion notification → update `PIPELINE.md` to DONE.
 
-Relay the subagent's final grade table, fix log, live URL, and confirmation
-evidence to the owner.
+Relay the subagent's full output UNTOUCHED, including the final grade sheet, fix
+log, and live URL confirmation (GLOBAL LAW 2).
